@@ -1,5 +1,5 @@
 # Complete Claude Code Brief
-# The Boredom App — MVP Build Specification
+# The Void — Complete Claude Code Brief
 # Version 1.0 | June 2026
 
 ---
@@ -16,7 +16,7 @@ This is a **local-first mobile app** built in Flutter. The guiding principle is:
 
 ### What is this app?
 
-A mobile app that does nothing — deliberately. Users set a timer, the screen goes blank, and they sit in silence. Afterwards they log whatever their idle mind produced. Over time the app tracks their "boredom tolerance score" — how long they can sit in stillness — and builds a personal archive of their idle thoughts.
+A mobile app that does nothing — deliberately. Users set a timer, the screen goes blank, and they sit in silence. Afterwards they log whatever their idle mind produced. Over time the app tracks their "stillness score" — how long they can sit in stillness — and builds a personal archive of their idle thoughts.
 
 ### The core philosophy
 
@@ -310,7 +310,7 @@ class AppDatabase extends _$AppDatabase {
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'boredom_app.sqlite'));
+    final file = File(p.join(dbFolder.path, 'the_void.sqlite'));
     return NativeDatabase.createInBackground(file);
   });
 }
@@ -320,7 +320,7 @@ LazyDatabase _openConnection() {
 
 ## 5. SCORE CALCULATION ALGORITHM
 
-The boredom tolerance score is the only number that matters in the app. It must feel meaningful and motivating — not arbitrary.
+The stillness score is the only number that matters in the app. It must feel meaningful and motivating — not arbitrary.
 
 ### Algorithm
 
@@ -425,10 +425,10 @@ String? autoTag(String thought) {
 
 **Page 3 — The Product**
 - Icon: pause icon (outlined)
-- Headline: `"This app does nothing. Deliberately."`
-- Body: `"You set a timer. The screen goes blank. No content, no music, no guidance. Just silence and whatever your mind does with it. Afterwards you log what surfaced. Over time your boredom tolerance grows."`
-- Callout box (italic): `"Not meditation. Not mindfulness. Just the old, forgotten art of having nothing to do."`
-- CTA: `"I want to try this →"`
+- Headline: `"The Void does nothing. That's the whole point."`
+- Body: `"Set a timer. The screen goes blank. No content, no music, no guidance — just you and the silence. Afterwards log what surfaced. Over time your tolerance for stillness grows."`
+- Callout box (italic): `"Not meditation. Not mindfulness. The Void is the old, forgotten art of having nothing to do."`
+- CTA: `"Take me into The Void →"`
 
 **Page 4 — Permissions**
 - Headline: `"Two small asks before we begin."`
@@ -452,11 +452,11 @@ String? autoTag(String thought) {
 1. Greeting — `"Good morning."` / `"Good afternoon."` / `"Good evening."` based on time
 2. Subline — `"You have nothing to do right now."`
 3. Tolerance score card:
-   - Label: `"Boredom tolerance"`
+   - Label: `"Stillness score"`
    - Large number (current score)
    - Change line: `"+X pts from last week"` — green if positive
    - If score is 0: show `"Your journey starts now."`
-4. Primary button: `"Begin a void session"`
+4. Primary button: `"Enter The Void"`
 5. Quick duration row — 4 pills: `2 min`, `5 min`, `10 min`, `Custom`
    - Tapping a quick pill skips the duration picker and goes straight to quiet prompt with that duration pre-selected
 6. Recent thoughts preview — last 2 thoughts from harvest
@@ -474,7 +474,7 @@ String? autoTag(String thought) {
 
 **Route:** `/session/duration`
 
-**Triggered by:** "Begin a void session" button on Home (without quick pill selection)
+**Triggered by:** "Enter The Void" button on Home (without quick pill selection)
 
 **Layout:**
 1. Title: `"How long can you give yourself?"`
@@ -490,7 +490,7 @@ String? autoTag(String thought) {
 5. Personal record nudge (if user has a record > 0):
    - Icon: trophy
    - Text: `"Your record is X minutes. Try to beat it today."`
-6. CTA: `"Begin X minute session →"` — updates dynamically with selection
+6. CTA: `"Enter The Void — X minutes →"` — updates dynamically with selection
 
 ---
 
@@ -672,7 +672,7 @@ Show bottom sheet:
 1. Title: `"Your progress."`
 2. Subtitle: `"Every session makes this number grow."`
 3. Large score card:
-   - Score label: `"Boredom tolerance score"`
+   - Score label: `"Stillness score"`
    - Large number (current score)
    - Change: `"+X pts this week · started at 0"`
 4. Bar chart — last 7 days of total session minutes
@@ -765,7 +765,7 @@ If not signed in: show inline prompt `"Create a free account to back up your tho
 
 **About**
 - Row: `"Privacy policy"` — opens in-app web view
-- Row: `"What does this app do?"` — navigates back to onboarding page 3
+- Row: `"What is The Void?"` — navigates back to onboarding page 3 (The Void explained)
 - Row: `"Version"` — shows app version
 
 ---
@@ -920,7 +920,7 @@ class BackupService {
   
   Key _deriveKey(String password) {
     final passwordBytes = utf8.encode(password);
-    final salt = utf8.encode('boredom_app_salt_v1'); // fixed salt is fine for this use case
+    final salt = utf8.encode('the_void_salt_v1'); // fixed salt is fine for this use case
     final pbkdf2 = Hmac(sha256, passwordBytes);
     // 10,000 iterations
     var key = salt;
@@ -1214,7 +1214,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import health, report
 
-app = FastAPI(title="Boredom App API", version="1.0.0")
+app = FastAPI(title="The Void API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -1256,7 +1256,7 @@ Create `render.yaml` in project root:
 ```yaml
 services:
   - type: web
-    name: boredom-app-api
+    name: the-void-api
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
@@ -1269,7 +1269,7 @@ services:
 
 ### Step 1 — Create Firebase project
 1. Go to console.firebase.google.com
-2. Create project: `boredom-app`
+2. Create project: `the-void-app`
 3. Disable Google Analytics (not needed, stays true to privacy promise)
 
 ### Step 2 — Enable services
@@ -1277,15 +1277,15 @@ services:
 2. Storage → Get started → Production mode → Apply rules from Section 9
 
 ### Step 3 — Add apps
-1. Add iOS app — bundle ID: `com.yourname.boredomapp`
-2. Add Android app — package: `com.yourname.boredomapp`
+1. Add iOS app — bundle ID: `com.yourname.thevoid`
+2. Add Android app — package: `com.yourname.thevoid`
 3. Download `GoogleService-Info.plist` → place in `ios/Runner/`
 4. Download `google-services.json` → place in `android/app/`
 
 ### Step 4 — FlutterFire CLI
 ```bash
 dart pub global activate flutterfire_cli
-flutterfire configure --project=boredom-app
+flutterfire configure --project=the-void-app
 ```
 This generates `lib/firebase_options.dart` automatically.
 
@@ -1353,8 +1353,11 @@ Do not build these. They are V2 features.
 
 ## 19. APP STORE METADATA
 
-### App name suggestions (TBD — name not finalised)
-Placeholder: `"still."` — to be confirmed before submission
+### App name
+`"The Void"`
+
+### Tagline
+`"Stare back. See what's there."`
 
 ### Short description (30 chars)
 `"The app that does nothing."`
@@ -1363,25 +1366,27 @@ Placeholder: `"still."` — to be confirmed before submission
 ```
 Most apps fight for every second of your attention.
 
-This one gives those seconds back.
+The Void gives those seconds back.
 
-Set a timer. The screen goes blank. No content, no music, no guidance — 
-just you and whatever your idle mind does with the silence.
+Open it. Set a timer. The screen goes blank — no content, no music,
+no guidance. Just you and whatever your idle mind does with the silence.
 
-Afterwards, log what surfaced. An idea. A memory. A question. Or nothing at all.
+Afterwards, log what surfaced. An idea. A memory. A question.
+Or nothing at all.
 
-Over time, your boredom tolerance grows — and your idle thoughts build into 
-a private archive that's entirely yours.
+Over time your stillness tolerance grows — and your idle thoughts
+build into a private archive that is entirely yours.
 
 — No social features. No algorithm. No ads.
 — Your thoughts are stored on your phone only.
 — We never read them. Ever.
 
-Start with 2 minutes. You might surprise yourself.
+Start with 2 minutes.
+You might be surprised by what stares back.
 ```
 
 ### Keywords
-`boredom, mindfulness, focus, stillness, digital wellness, attention, creativity, journal, offline`
+`the void, boredom, stillness, digital detox, screen time, focus, creativity, offline, mindfulness`
 
 ### Category
 Health & Fitness (primary) / Lifestyle (secondary)
@@ -1416,7 +1421,7 @@ Health & Fitness (primary) / Lifestyle (secondary)
 ---
 
 *End of Claude Code Brief — Version 1.0*
-*Built for: The Boredom App MVP*
+*Built for: The Void — MVP*
 *Stack: Flutter + drift + Firebase + FastAPI*
 *Target: iOS + Android*
 *Monthly infra cost: $0*
