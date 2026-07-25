@@ -1,0 +1,47 @@
+# Firebase config — never commit these
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
+
+# Environment
+.env
+backend/.env
+
+# Generated files — regenerate with build_runner
+*.g.dart
+*.freezed.dart
+
+# Build outputs
+build/
+.dart_tool/
+
+# Flutter/Dart
+.packages
+.pub-cache/
+.pub/
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# macOS
+.DS_Store
+
+# iOS
+ios/.symlinks/
+ios/Flutter/App.framework
+ios/Flutter/Flutter.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+
+# Android
+android/local.properties
+android/.gradle
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/GeneratedPluginRegistrant.java
